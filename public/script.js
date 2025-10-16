@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- (submitVote 및 나머지 버튼 이벤트 리스너 부분은 v6.1과 동일하며, 완벽하게 복구됨) ---
     const submitVote = (voteType) => {
         const VOTE_PASSWORD = "1008"; // 투표 비밀번호
-        const password = prompt("투표 비밀번호를 입력하세요:");
+        const password = prompt("투표 비밀번호를 입력하세요.");
         if (password === null) return;
         if (password !== VOTE_PASSWORD) {
             alert('비밀번호가 틀렸습니다.');
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     mainLinkBtn.addEventListener('click', () => { window.location.href = 'https://toastout.github.io/toast/'; });
     adminResetBtn.addEventListener('click', () => {
-        const password = prompt('관리자 비밀번호를 입력하세요:');
+        const password = prompt('관리자 비밀번호를 입력하세요.');
         if (password) {
             const resetFunction = functions.httpsCallable('resetVotesAdmin');
             resetFunction({ password: password })
