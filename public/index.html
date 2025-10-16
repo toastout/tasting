@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 상태는?</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <button id="main-link-btn" title="돌아가기">🍞️</button>
+        <button id="admin-reset-btn" title="초기화">🫠</button>
+    </div>
+    <div class="container">
+        <h1>오늘의 상태는?</h1>
+        <p>매일 자정(UTC)에 초기화됩니다.</p>
+        <div class="vote-section">
+            <div class="vote-item">
+                <p class="button-label">달릴 때</p>
+                <button id="vote-yay">🥳⚡️</button>
+            </div>
+            <div class="vote-item">
+                <p class="button-label">zZz</p>
+                <button id="vote-nay">🧱🥱</button>
+            </div>
+        </div>
+
+<div class="results-section">
+            <h2>결과</h2>
+            <p id="yay-result">🥳⚡️: <span id="yay-count">0</span></p>
+            <p id="nay-result">🧱🥱: <span id="nay-count">0</span></p>
+        </div>
+
+        <div class="log-section">
+            <h3>투표 기록</h3>
+            <ul id="log-list"></ul>
+        </div>
+
+        <div class="analysis-section">
+            <h3>시간대별 분석</h3>
+            <div class="period-grid">
+                <div class="period-item">
+                    <div class="period-title">🌃 새벽 (0-6시)</div>
+                    <div class="period-counts">🥳⚡️ <span id="p1-yay">0</span> / 🧱🥱 <span id="p1-nay">0</span></div>
+                </div>
+                <div class="period-item">
+                    <div class="period-title">🌄️ 아침 (6-12시)</div>
+                    <div class="period-counts">🥳⚡️ <span id="p2-yay">0</span> / 🧱🥱 <span id="p2-nay">0</span></div>
+                </div>
+                <div class="period-item">
+                    <div class="period-title"> 🌆 낮 (12-18시)</div>
+                    <div class="period-counts">🥳⚡️ <span id="p3-yay">0</span> / 🧱🥱 <span id="p3-nay">0</span></div>
+                </div>
+                <div class="period-item">
+                    <div class="period-title">🌇️ 저녁 (18-24시)</div>
+                    <div class="period-counts">🥳⚡️ <span id="p4-yay">0</span> / 🧱🥱 <span id="p4-nay">0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
+
+    <script>
+      // [추가] Firebase에 연결하기 위한 '비밀 주소'
+      const firebaseConfig = {
+      apiKey: "AIzaSyBjhC-C55rt1uXahFnZzMWZS3TyR_OdDQ4",
+      authDomain: "toast-out.firebaseapp.com",
+      projectId: "toast-out",
+      storageBucket: "toast-out.firebasestorage.app",
+      messagingSenderId: "124776565959",
+      appId: "1:124776565959:web:211d703be845341c5642e2",
+      measurementId: "G-3R9E4MB4N8"
+      };
+
+
+      // Firebase 초기화
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+<script src="script.js"></script>
+
+<script>
+  document.addEventListener('contextmenu', function(event) {
+    // 그냥, 조용히, 막는다.
+    event.preventDefault();
+  });
+</script>
+
+</body>
+</html>

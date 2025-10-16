@@ -1,0 +1,157 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    
+    /* [추가] 텍스트 드래그(선택)를 방지하는 코드 */
+    user-select: none; /* 표준 브라우저 */
+    -webkit-user-select: none; /* 크롬, 사파리 */
+    -moz-user-select: none; /* 파이어폭스 */
+    -ms-user-select: none; /* 인터넷 익스플로러 */
+}
+
+.container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+h1 { font-size: 1.8rem; }
+.vote-section button {
+    font-size: 3rem;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 1rem;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.vote-section button:hover {
+    transform: scale(1.1);
+    border-color: #ddd;
+}
+.results-section {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+}
+.log-section {
+    margin-top: 2rem;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+#log-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 0.9rem;
+    color: #606770;
+}
+#log-list li {
+    padding: 0.25rem 0;
+}
+
+/* [추가] 헤더 스타일 */
+.header {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+.header button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+.header button:hover {
+    transform: scale(1.1);
+}
+
+/* [추가] 더 커지는 이모지 효과 */
+.bigger-emoji {
+    transform: scale(1.2);
+    border-color: #ffd700 !important; /* 중요도를 높여 다른 스타일을 덮어씀 */
+}
+
+/* [추가] 시간대별 분석 섹션 스타일 */
+.analysis-section {
+    margin-top: 2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    text-align: left;
+}
+.period-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 격자 */
+    gap: 10px;
+}
+.period-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+body.dark .period-item {
+    background-color: #333;
+}
+.period-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* [수정] vote-section 전체를 가로 정렬의 기준으로 만듭니다. */
+.vote-section {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: flex-end;   /* 아이템들의 아래쪽을 기준으로 정렬 */
+    gap: 2rem;               /* 아이템 사이의 간격 */
+    margin-top: 2rem;        /* 위쪽과의 간격 확보 */
+}
+
+/* [추가] 텍스트와 버튼을 묶는 각 아이템의 스타일 */
+.vote-item {
+    display: flex;
+    flex-direction: column;  /* 아이템을 세로로 쌓습니다 (텍스트 -> 버튼) */
+    align-items: center;     /* 세로로 쌓인 아이템들을 가운데 정렬 */
+}
+
+/* [추가] 텍스트 라벨('팻말')의 디자인 */
+.button-label {
+    font-size: 1rem;         /* 글자 크기 */
+    font-weight: 600;        /* 글자 굵기 */
+    color: #555;             /* 글자 색 */
+    margin: 0 0 10px 0;      /* 위, 양옆, 아래쪽 여백 (버튼과의 간격) */
+    padding: 6px 12px;       /* 팻말 내부 여백 */
+    background-color: #e9ecef; /* 팻말 배경색 */
+    border-radius: 10px;     /* 팻말 모서리를 둥글게 */
+}
+
+/* [추가] 결과 값 하이라이트 효과 */
+.highlighted-result {
+    background-color: #fffbe6; /* 은은한 노란색 배경 */
+    border-radius: 8px;
+    transform: scale(1.05); /* 살짝 커지는 효과 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    padding: 5px 0;
+    margin: 5px 0;
+}

@@ -1,0 +1,8 @@
+{
+  "name": "emoji-vote-functions",
+  "version": "1.0.0",
+  "description": "Serverless functions for the emoji voting app.",
+  "dependencies": {
+    "@netlify/blobs": "^7.0.0"
+  }
+}
