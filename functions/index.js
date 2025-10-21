@@ -1,4 +1,4 @@
-// functions/index.js (v5.2 - 데이터 아카이빙 기능이 포함된 최종 완성본)
+// functions/index.js (v8.0 - '한마디' 기능이 포함된 전체 코드)
 const { onCall } = require("firebase-functions/v2/https");
 const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { initializeApp } = require("firebase-admin/app");
@@ -48,9 +48,13 @@ const generateRandomNickname = () => {
     return `${adjectives[Math.floor(Math.random() * adjectives.length)]} 펠시`;
 };
 
+// [수정] '한마디' 텍스트를 받도록 addVote 함수 변경
 exports.addVote = onCall(async (request) => {
     const vote = request.data.vote;
+    const text = request.data.text; // [추가] 클라이언트가 보낸 '한마디' 텍스트를 받음
+
     if (!['yay', 'nay'].includes(vote)) { throw new Error('Invalid vote type'); }
+    
     const now = new Date(new Date().getTime() + 9 * 60 * 60 * 1000);
     const hour = now.getUTCHours();
     let period;
@@ -58,10 +62,14 @@ exports.addVote = onCall(async (request) => {
     else if (hour >= 6 && hour < 12) period = 'p2';
     else if (hour >= 12 && hour < 18) period = 'p3';
     else period = 'p4';
+
     const db = getFirestore();
     const voteRef = db.collection('votes').doc('today');
     const nickname = generateRandomNickname();
-    const newLog = { nickname, vote, timestamp: new Date() };
+    
+    // [수정] newLog 객체에 'text' 필드를 추가해서 저장
+    const newLog = { nickname, vote, timestamp: new Date(), text: text };
+
     await db.runTransaction(async (transaction) => {
         const doc = await transaction.get(voteRef);
         const updates = {};
@@ -69,12 +77,14 @@ exports.addVote = onCall(async (request) => {
         updates.yay = FieldValue.increment(vote === 'yay' ? 1 : 0);
         updates.nay = FieldValue.increment(vote === 'nay' ? 1 : 0);
         updates[`periods.${period}.${vote}`] = FieldValue.increment(1);
+        
         if (!doc.exists) {
             transaction.set(voteRef, updates);
         } else {
             transaction.update(voteRef, updates);
         }
     });
+
     return { success: true };
 });
 
@@ -86,13 +96,12 @@ const resetData = {
     }
 };
 
-// [수정] 자동 초기화 시 어제 날짜로 데이터를 백업(아카이빙)하는 기능
 exports.resetVotesScheduled = onSchedule({schedule: '0 0 * * *', timeZone: 'Asia/Seoul'}, async (event) => {
     const db = getFirestore();
     const todayRef = db.collection('votes').doc('today');
 
     const todayDoc = await todayRef.get();
-    if (todayDoc.exists && todayDoc.data().log.length > 0) { // 로그가 있을 때만 아카이빙
+    if (todayDoc.exists && todayDoc.data().log.length > 0) { 
         const yesterday = new Date(new Date().getTime() + 9 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000);
         const archiveId = yesterday.toISOString().slice(0, 10);
         
@@ -106,7 +115,6 @@ exports.resetVotesScheduled = onSchedule({schedule: '0 0 * * *', timeZone: 'Asia
     return null;
 });
 
-// [수정] 관리자 초기화는 아카이빙 없이 '오늘' 데이터만 리셋
 exports.resetVotesAdmin = onCall(async (request) => {
     const ADMIN_PASSWORD = "burnout"; // 이 부분은 네 비밀번호로!
     if (request.data.password !== ADMIN_PASSWORD) {

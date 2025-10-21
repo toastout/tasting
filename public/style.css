@@ -1,3 +1,4 @@
+/* public/style.css (v8.0 - '한마디' 하이라이트 디자인 추가) */
 @font-face {
     font-family: 'Ridibatang';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
@@ -6,8 +7,7 @@
 }
 
 body {
-    /* [수정] font-family를 Ridibatang으로 변경! */
-    font-family: 'Ridibatang', serif; /* Ridibatang 폰트를 우선 적용, 실패 시 기본 바탕체 표시 */
+    font-family: 'Ridibatang', serif; 
     background-color: #f0f2f5;
     color: #1c1e21;
     display: flex;
@@ -15,12 +15,10 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    
-    /* [추가] 텍스트 드래그(선택)를 방지하는 코드 */
-    user-select: none; /* 표준 브라우저 */
-    -webkit-user-select: none; /* 크롬, 사파리 */
-    -moz-user-select: none; /* 파이어폭스 */
-    -ms-user-select: none; /* 인터넷 익스플로러 */
+    user-select: none; 
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
 }
 
 .container {
@@ -61,14 +59,18 @@ h1 { font-size: 1.8rem; }
 #log-list {
     list-style-type: none;
     padding: 0;
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* 이 값은 아래 li 스타일로 덮어써짐 */
     color: #606770;
 }
+
+/* [수정] 로그 리스트의 기본 스타일 변경 */
 #log-list li {
-    padding: 0.25rem 0;
+    padding: 0.4rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #606770; /* 기본 로그 색상 */
 }
 
-/* [추가] 헤더 스타일 */
 .header {
     position: absolute;
     top: 20px;
@@ -94,14 +96,10 @@ h1 { font-size: 1.8rem; }
 .header button:hover {
     transform: scale(1.1);
 }
-
-/* [추가] 더 커지는 이모지 효과 */
 .bigger-emoji {
     transform: scale(1.2);
-    border-color: #ffd700 !important; /* 중요도를 높여 다른 스타일을 덮어씀 */
+    border-color: #ffd700 !important; 
 }
-
-/* [추가] 시간대별 분석 섹션 스타일 */
 .analysis-section {
     margin-top: 2rem;
     border-top: 1px solid #eee;
@@ -110,7 +108,7 @@ h1 { font-size: 1.8rem; }
 }
 .period-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2x2 격자 */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 10px;
 }
 .period-item {
@@ -126,45 +124,35 @@ body.dark .period-item {
     font-weight: bold;
     margin-bottom: 5px;
 }
-
-/* [수정] vote-section 전체를 가로 정렬의 기준으로 만듭니다. */
 .vote-section {
     display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    align-items: flex-end;   /* 아이템들의 아래쪽을 기준으로 정렬 */
-    gap: 2rem;               /* 아이템 사이의 간격 */
-    margin-top: 2rem;        /* 위쪽과의 간격 확보 */
+    justify-content: center; 
+    align-items: flex-end;   
+    gap: 2rem;               
+    margin-top: 2rem;        
 }
-
-/* [추가] 텍스트와 버튼을 묶는 각 아이템의 스타일 */
 .vote-item {
     display: flex;
-    flex-direction: column;  /* 아이템을 세로로 쌓습니다 (텍스트 -> 버튼) */
-    align-items: center;     /* 세로로 쌓인 아이템들을 가운데 정렬 */
+    flex-direction: column;  
+    align-items: center;     
 }
-
-/* [추가] 텍스트 라벨('팻말')의 디자인 */
 .button-label {
-    font-size: 1rem;         /* 글자 크기 */
-    font-weight: 600;        /* 글자 굵기 */
-    color: #555;             /* 글자 색 */
-    margin: 0 0 10px 0;      /* 위, 양옆, 아래쪽 여백 (버튼과의 간격) */
-    padding: 6px 12px;       /* 팻말 내부 여백 */
-    background-color: #e9ecef; /* 팻말 배경색 */
-    border-radius: 10px;     /* 팻말 모서리를 둥글게 */
+    font-size: 1rem;         
+    font-weight: 600;        
+    color: #555;             
+    margin: 0 0 10px 0;      
+    padding: 6px 12px;       
+    background-color: #e9ecef; 
+    border-radius: 10px;     
 }
-
-/* [추가] 결과 값 하이라이트 효과 */
 .highlighted-result {
-    background-color: #fffbe6; /* 은은한 노란색 배경 */
+    background-color: #fffbe6; 
     border-radius: 8px;
-    transform: scale(1.05); /* 살짝 커지는 효과 */
-    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    transform: scale(1.05); 
+    transition: all 0.3s ease; 
     padding: 5px 0;
     margin: 5px 0;
 }
-
-/* [추가] 로그 날짜 헤더 스타일 */
 .log-date-header {
     font-weight: bold;
     font-size: 1rem;
@@ -174,5 +162,16 @@ body.dark .period-item {
     margin-top: 15px;
     margin-bottom: 5px;
     border-radius: 5px;
-    list-style: none; /* 리스트 점 제거 */
+    list-style: none; 
+}
+
+/* [추가] '한마디' 메시지 하이라이트 스타일 */
+.log-message {
+    background-color: #fffbe6; /* 하이라이트 배경색 */
+    color: #4B4B4B; /* 살짝 진한 글씨 */
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-style: normal; /* 이탤릭체 제거 */
+    font-weight: 600; /* 살짝 굵게 */
+    margin-left: 5px;
 }
