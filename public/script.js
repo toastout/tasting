@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="log-message-text">${message}</span>
                     <span class="log-message-quote">"</span>
                 </span>
-                <span class="log-meta">[${timeStr}] ${item.nickname}가 느꼈을 때는? ${voteEmoji}</span>
+                <span class="log-meta">[${timeStr}] ${item.nickname}의 소중한 한 표 ${voteEmoji}</span>
             `;
             logList.appendChild(li);
         });
