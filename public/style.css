@@ -1,4 +1,4 @@
-/* public/style.css (v8.0 - '한마디' 하이라이트 디자인 추가) */
+/* public/style.css (v9.0 - '변경안 (2)' 디자인 적용) */
 @font-face {
     font-family: 'Ridibatang';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
@@ -59,16 +59,7 @@ h1 { font-size: 1.8rem; }
 #log-list {
     list-style-type: none;
     padding: 0;
-    font-size: 0.9rem; /* 이 값은 아래 li 스타일로 덮어써짐 */
     color: #606770;
-}
-
-/* [수정] 로그 리스트의 기본 스타일 변경 */
-#log-list li {
-    padding: 0.4rem 0;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #606770; /* 기본 로그 색상 */
 }
 
 .header {
@@ -165,13 +156,44 @@ body.dark .period-item {
     list-style: none; 
 }
 
-/* [추가] '한마디' 메시지 하이라이트 스타일 */
+/* --- [v9.0 디자인 수정] --- */
+
+/* [수정] 로그 리스트 각 항목 스타일 */
+#log-list li {
+    padding: 0.5rem 0.2rem;
+    line-height: 1.5;
+    border-bottom: 1px solid #f0f0f0;
+    list-style: none;
+}
+#log-list li:last-child {
+    border-bottom: none; /* 마지막 항목 구분선 제거 */
+}
+
+/* [추가] '한마디' 메시지 (첫 줄) */
 .log-message {
+    display: block;
+    font-size: 1.05rem; /* 폰트 살짝 크게 */
+    font-weight: 600;
+}
+
+/* [추가] '한마디'의 인용 부호 (연한 색) */
+.log-message-quote {
+    color: #bbb; /* 연한 회색 */
+    font-weight: normal;
+}
+
+/* [추가] '한마디'의 실제 텍스트 (하이라이트) */
+.log-message-text {
     background-color: #fffbe6; /* 하이라이트 배경색 */
-    color: #4B4B4B; /* 살짝 진한 글씨 */
+    color: #4B4B4B;
     padding: 2px 6px;
     border-radius: 4px;
-    font-style: normal; /* 이탤릭체 제거 */
-    font-weight: 600; /* 살짝 굵게 */
-    margin-left: 5px;
+}
+
+/* [추가] 메타 정보 (두 번째 줄) */
+.log-meta {
+    display: block;
+    font-size: 0.9rem;
+    color: #777; /* 메타 정보 텍스트 색 */
+    margin-top: 5px; /* '한마디'와의 간격 */
 }

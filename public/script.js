@@ -1,4 +1,4 @@
-// public/script.js (v8.0 - '한마디' + '시간' + '하이라이트' 전체 코드)
+// public/script.js (v9.0 - '변경안 (2)' 디자인 적용)
 const db = firebase.firestore();
 const functions = firebase.functions();
 
@@ -13,9 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const yayResultP = document.getElementById('yay-result');
     const nayResultP = document.getElementById('nay-result');
 
-    let archiveLogs = []; // 과거 로그를 저장할 변수
+    let archiveLogs = []; 
 
-    // '역사가'의 임무: 과거 기록은 페이지 로드 시 딱 한 번만 가져온다.
     async function fetchArchives() {
         try {
             const todayDate = new Date(new Date().getTime() + 9 * 60 * 60 * 1000);
@@ -37,16 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // '실시간 감시병'의 임무: '오늘'의 데이터만 감시하고 화면을 업데이트한다.
     db.collection('votes').doc('today').onSnapshot((todayDoc) => {
-        logList.innerHTML = ''; // 화면을 깨끗이 비운다
+        logList.innerHTML = ''; 
         let todayLogs = [];
 
         if (todayDoc.exists) {
             const data = todayDoc.data();
             todayLogs = data.log || [];
 
-            // 오늘의 데이터 표시 (결과, 하이라이트, 시간대별 분석 등)
             const yayTotal = data.yay || 0;
             const nayTotal = data.nay || 0;
             yayCountSpan.textContent = yayTotal;
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const allLogs = [...todayLogs, ...archiveLogs];
         allLogs.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
 
-        // [수정] '시간'과 '한마디' 하이라이트를 포함한 새 디자인으로 표시
+        // [수정] '변경안 (2)' 디자인 적용 (대사 -> 작가 순)
         let lastDate = '';
         allLogs.forEach(item => {
             const dateObj = item.timestamp.toDate();
@@ -84,21 +81,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const li = document.createElement('li');
-            const timeStr = dateObj.toLocaleTimeString('ko-KR'); // [추가] 시간 복원
+            const timeStr = dateObj.toLocaleTimeString('ko-KR');
             const voteEmoji = item.vote === 'yay' ? '🥳⚡️' : '🧱🥱'; // 이모지는 네 것으로 수정!
-            const message = item.text || '🐱'; // DB에 text가 없으면 🐱로 표시
+            const message = item.text || '🐱'; 
 
-            // innerHTML을 사용해 새 포맷으로 렌더링
-            li.innerHTML = `[${timeStr}] ${item.nickname}(${voteEmoji}) <span class="log-message">"${message}"</span>`;
+            li.innerHTML = `
+                <span class="log-message">
+                    <span class="log-message-quote">"</span>
+                    <span class="log-message-text">${message}</span>
+                    <span class="log-message-quote">"</span>
+                </span>
+                <span class="log-meta">[${timeStr}] ${item.nickname}(${voteEmoji})</span>
+            `;
             logList.appendChild(li);
         });
     });
 
     fetchArchives();
 
-    // [수정] '한마디'를 입력받는 새로운 submitVote 함수
     const submitVote = (voteType) => {
-        const VOTE_PASSWORD = "1008"; // 네가 설정한 "1008" 비밀번호
+        const VOTE_PASSWORD = "1008"; // 네 비밀번호
         const password = prompt("투표 비밀번호를 입력하세요:");
         if (password === null) return;
         if (password !== VOTE_PASSWORD) {
@@ -114,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // [추가] '한마디' 입력받기
         let message = prompt("하고 싶은 말을 6자 이내로 입력하세요 (미입력 시 🐱):");
         if (message === null) return; 
 
